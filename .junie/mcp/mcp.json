@@ -1,0 +1,11 @@
+{
+    "mcpServers": {
+        "laravel-boost": {
+            "command": "/Users/etmacmini/Library/Application Support/Herd/bin/php82",
+            "args": [
+                "/Users/etmacmini/Projects/laravel/artisan",
+                "boost:mcp"
+            ]
+        }
+    }
+}
