@@ -1,8 +1,9 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
+import { useEffect } from 'react';
 import { PlaceholderPattern } from '@/components/ui/placeholder-pattern';
 import AppLayout from '@/layouts/app-layout';
-import { dashboard } from '@/routes';
 import type { BreadcrumbItem } from '@/types';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const breadcrumbs: BreadcrumbItem[] = [
     {
@@ -12,10 +13,22 @@ const breadcrumbs: BreadcrumbItem[] = [
 ];
 
 export default function Index() {
+
+    const { flash } = usePage<{ flash?: { success?: string; error?: string } }>().props;
+    const flashMessage = flash.success || flash.error;
+console.log(flash);
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
             <Head title="Product Managment" />
             <div className="flex h-full flex-1 flex-col gap-4 overflow-x-auto rounded-xl p-4">
+                {(flash?.success || flash?.error) && (
+                <Alert variant={'default'} className={`${ flash?.success ? 'bg-green-800' : (flash?.error ? 'bg-red-800' : '')}`}>
+                    <AlertTitle>
+                        {flash.success ? 'Success' : 'Error'}
+                    </AlertTitle>
+                    <AlertDescription>{flashMessage}</AlertDescription>
+                </Alert>
+                )}
                 <div className='ml-auto'>
                 <Link as='button' href='/products/create' className='bg-indigo-800 px-4 py-2 rounded-lg text-white text-md cursor-pointer hover:opacity-90'>Add Product</Link>
                 </div>
